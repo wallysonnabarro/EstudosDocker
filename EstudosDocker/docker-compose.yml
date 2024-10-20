@@ -1,42 +1,23 @@
 ﻿services:
-  api:
-    container_name: estudos-api
-    build:
-      dockerfile: Dockerfile
-      context: .
-    ports:
-      - 4652:8080
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    depends_on: 
-      - "rabbitmq"
-      - "sqldata"
-    networks:
-      - estudos-networks     
-
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 15s
+      retries: 3
     ports:
         - 5672:5672
         - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "Livros123Estudos"
     volumes:
         - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - estudos-networks
-    command: >
-      sh -c "rabbitmq-server &
-      rabbitmqctl add_vhost / &&
-      rabbitmqctl set_permissions -p / estudos-user '.*' '.*' '.*' &&
-      rabbitmqctl set_user_tags estudos-user administrator &&
-      rabbitmqctl delete_user guest"
-    healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "status"]
-      interval: 30s
-      timeout: 30s
-      retries: 3
-      start_period: 30s
       
   sqldata:
     image: mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
@@ -52,6 +33,20 @@
     networks:
       - estudos-networks
       
+  api:
+    container_name: estudos-api
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 4652:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on: ["rabbitmq","sqldata"]
+    restart: on-failure
+    networks:
+      - estudos-networks    
+
 volumes:
   livros-bd-mssql-server:        
 

@@ -21,11 +21,7 @@ namespace EstudosDocker.infra
                 busConfigurator.SetKebabCaseEndpointNameFormatter();
                 busConfigurator.UsingRabbitMq((ctx, cfg) =>
                 {
-                    cfg.Host(new Uri("amqp://rabbitmq:5672"), host =>
-                    {
-                        host.Username("guest");
-                        host.Password("guest");
-                    });
+                    cfg.Host(new Uri("rabbitmq://admin:Livros123Estudos@rabbitmq:5672"));
 
                     cfg.ConfigureEndpoints(ctx);
                 });
