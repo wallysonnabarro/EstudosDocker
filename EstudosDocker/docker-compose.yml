@@ -2,6 +2,9 @@
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'
+    hostname: "rabbitmq"
+    labels:
+      NAME: "rabbitmq"
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 5s
@@ -22,6 +25,7 @@
   sqldata:
     image: mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
     container_name: 'sqldata'
+    hostname: "sqldata"
     environment:
       - MSSQL_SA_PASSWORD=Livros123@Estudos
       - ACCEPT_EULA=Y

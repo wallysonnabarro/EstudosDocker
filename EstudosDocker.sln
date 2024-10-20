@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudosDocker", "EstudosDocker\EstudosDocker.csproj", "{9A48F7BF-B626-40AF-A0DD-3B997F40F6F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudosDockerServicoTheWork", "EstudosDockerServicoTheWork\EstudosDockerServicoTheWork.csproj", "{49D3EABA-73A8-4DDB-93FE-7316540BC659}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9A48F7BF-B626-40AF-A0DD-3B997F40F6F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A48F7BF-B626-40AF-A0DD-3B997F40F6F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A48F7BF-B626-40AF-A0DD-3B997F40F6F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49D3EABA-73A8-4DDB-93FE-7316540BC659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49D3EABA-73A8-4DDB-93FE-7316540BC659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49D3EABA-73A8-4DDB-93FE-7316540BC659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49D3EABA-73A8-4DDB-93FE-7316540BC659}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

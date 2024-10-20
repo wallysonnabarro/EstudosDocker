@@ -1,5 +1,5 @@
 ﻿using EstudosDocker.domain;
-using EstudosDocker.infra.interfaces;
+using EstudosDocker.services.interfaces;
 
 namespace EstudosDocker.Controllers
 {
@@ -9,16 +9,9 @@ namespace EstudosDocker.Controllers
         {
             //app.MapGet("livros", () => ListaLivros.Lista);
 
-            app.MapPost("registrar-livro", async (LivroDto livro, ILivrosInfra infra, CancellationToken ct = default) =>
+            app.MapPost("registrar-livro", async (LivroDto livro, IMessageService message, CancellationToken ct = default) =>
             {
-                var novo = new LivroDto()
-                {
-                    Nome = livro.Nome,
-                    Titulo = livro.Titulo,
-                    Descricao = livro.Descricao,
-                };
-
-                var result = await infra.NovoLivroPublish(novo, ct);
+                var result = await message.Enqueue(livro, ct);
 
                 return Results.Ok(result);
             });
