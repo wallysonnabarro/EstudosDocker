@@ -1,4 +1,5 @@
 ﻿using EstudosDockerServicoTheWork.Dominio;
+using EstudosDockerServicoTheWork.Infra.Interface;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -12,8 +13,9 @@ namespace EstudosDockerServicoTheWork.Services
         ConnectionFactory _factory;
         IConnection _conn;
         IModel _channel;
+        private readonly ILivroRepository _repository;
 
-        public MessageService()
+        public MessageService(ILivroRepository repository)
         {
             Console.WriteLine("about to connect to rabbit");
 
@@ -27,12 +29,14 @@ namespace EstudosDockerServicoTheWork.Services
                                     exclusive: false,
                                     autoDelete: false,
                                     arguments: null);
+            _repository = repository;
         }
+
         public void Enqueue()
         {
             var consumer = new EventingBasicConsumer(_channel);
 
-            consumer.Received += (model, ea) =>
+            consumer.Received += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();  // Obtém o corpo da mensagem como um array de bytes
                 var message = Encoding.UTF8.GetString(body);  // Converte para string (JSON)
@@ -40,9 +44,8 @@ namespace EstudosDockerServicoTheWork.Services
                 // Desserializa o JSON de volta para o objeto LivroDto
                 var livro = JsonSerializer.Deserialize<LivroDto>(message);
 
-                // Agora você pode usar o objeto livro da forma que precisar
-                Console.WriteLine(" [x] Received from Rabbit: {0}", message);
-                Console.WriteLine(" [x] Processed Livro: {0}", livro.Titulo);  // Exemplo de uso do objeto livro
+                if (livro != null)
+                    await _repository.GravarLivro(livro);
             };
 
             _channel.BasicConsume(queue: "hello",
