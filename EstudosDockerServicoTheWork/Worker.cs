@@ -1,3 +1,4 @@
+using EstudosDockerServicoTheWork.Infra;
 using EstudosDockerServicoTheWork.Services;
 
 namespace EstudosDockerServicoTheWork
@@ -21,7 +22,7 @@ namespace EstudosDockerServicoTheWork
                 {
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 }
-
+                                
                 await Task.Delay(1000, stoppingToken);
 
                 _message.Enqueue();

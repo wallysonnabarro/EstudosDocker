@@ -1,4 +1,4 @@
-﻿services:
+services:
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'
@@ -40,7 +40,7 @@
   api:
     container_name: estudos-api
     build:
-      dockerfile: Dockerfile
+      dockerfile: EstudosDocker/Dockerfile
       context: .
     ports:
       - 4652:8080
@@ -50,6 +50,18 @@
     restart: on-failure
     networks:
       - estudos-networks    
+
+  serviceworker:
+    container_name: estudos-service
+    build:
+      context: .
+      dockerfile: EstudosDockerServicoTheWork/Dockerfile
+    ports:
+      - 4655:8087
+    depends_on: ["rabbitmq","sqldata"]
+    restart: on-failure
+    networks:
+      - estudos-networks
 
 volumes:
   livros-bd-mssql-server:        

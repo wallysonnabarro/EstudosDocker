@@ -4,15 +4,14 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Channels;
 
 namespace EstudosDockerServicoTheWork.Services
 {
     internal class MessageService : IMessageService
     {
-        ConnectionFactory _factory;
-        IConnection _conn;
-        IModel _channel;
+        private ConnectionFactory _factory;
+        private IConnection _conn;
+        private IModel _channel;
         private readonly ILivroRepository _repository;
 
         public MessageService(ILivroRepository repository)

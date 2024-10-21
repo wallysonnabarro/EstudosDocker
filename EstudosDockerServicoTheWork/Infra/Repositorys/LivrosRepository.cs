@@ -5,29 +5,34 @@ namespace EstudosDockerServicoTheWork.Infra.Repositorys
 {
     internal class LivrosRepository : ILivroRepository
     {
-        private readonly ContextDb _db;
+        private readonly IServiceScopeFactory _scopeFactory;
 
-        public LivrosRepository(ContextDb db)
+        public LivrosRepository(IServiceScopeFactory scopeFactory)
         {
-            _db = db;
+            _scopeFactory = scopeFactory;
         }
 
         public async Task<Result<bool>> GravarLivro(LivroDto dto)
         {
             try
             {
-                var novo = new Livro
+                using (var scope = _scopeFactory.CreateScope())
                 {
-                    Nome = dto.Nome,
-                    Titulo = dto.Titulo,
-                    DataProcessado = DateTime.Now,
-                    Descricao = dto.Descricao,
-                };
+                    var _db = scope.ServiceProvider.GetRequiredService<ContextDb>();
 
-                _db.Add(novo);
-                await _db.SaveChangesAsync();
+                    var novo = new Livro
+                    {
+                        Nome = dto.Nome,
+                        Titulo = dto.Titulo,
+                        DataProcessado = DateTime.Now,
+                        Descricao = dto.Descricao,
+                    };
 
-                return Result<bool>.Success;
+                    _db.Add(novo);
+                    await _db.SaveChangesAsync();
+
+                    return Result<bool>.Success;
+                }
             }
             catch (Exception e)
             {
