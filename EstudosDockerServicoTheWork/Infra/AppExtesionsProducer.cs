@@ -18,7 +18,7 @@ namespace EstudosDockerServicoTheWork.Infra
 
                 bus.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host(new Uri(builder["MessageBroker:Host"]!), h =>
+                    cfg.Host(new Uri(builder["MessageBroker:Host"]!), "/", h =>
                     {
                         h.Username(builder["MessageBroker:Username"]!);
                         h.Password(builder["MessageBroker:Password"]!);
