@@ -16,13 +16,13 @@ services:
       - estudos-networks
       
   newsletter-sqldata:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mcr.microsoft.com/azure-sql-edge
     container_name: Newsletter.Sqldata
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Livros123@Estudos"
+      MSSQL_SA_PASSWORD: "Livros123@Estudos"
     ports:
-      - "1433:1433"
+      - "1200:1433"
     volumes:
       - "./.containers/database:/var/opt/mssql/data"
     networks:
