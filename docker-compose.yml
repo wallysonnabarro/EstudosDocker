@@ -25,13 +25,13 @@ services:
   sqldata:
     image: mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
     container_name: 'sqldata'
-    hostname: "sqldata"
+    hostname: 'sqldata'
     environment:
       - MSSQL_SA_PASSWORD=Livros123@Estudos
       - ACCEPT_EULA=Y
       - MSSQL_PID=Evaluation
     ports:
-      - "5434:1433"
+      - "1433:1433"
     volumes:
       - "livros-bd-mssql-server:/var/opt/mssql"
     networks:
@@ -43,7 +43,7 @@ services:
       dockerfile: EstudosDocker/Dockerfile
       context: .
     ports:
-      - 4652:8080
+      - 8080:8080
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on: ["rabbitmq","sqldata"]
@@ -57,7 +57,9 @@ services:
       context: .
       dockerfile: EstudosDockerServicoTheWork/Dockerfile
     ports:
-      - 4655:8087
+      - 8087:8087
+    environment:
+      - MSSQL_SA_PASSWORD=Livros123@Estudos
     depends_on: ["rabbitmq","sqldata"]
     restart: on-failure
     networks:

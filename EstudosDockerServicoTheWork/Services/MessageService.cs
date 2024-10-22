@@ -19,37 +19,50 @@ namespace EstudosDockerServicoTheWork.Services
             Console.WriteLine("about to connect to rabbit");
 
             _factory = new ConnectionFactory() { HostName = "rabbitmq", Port = 5672 };
+            _factory.DispatchConsumersAsync = true;
+            _factory.NetworkRecoveryInterval = TimeSpan.FromSeconds(10);
             _factory.UserName = "admin";
             _factory.Password = "Livros123Estudos";
             _conn = _factory.CreateConnection();
             _channel = _conn.CreateModel();
             _channel.QueueDeclare(queue: "keylivros",
-                                    durable: false,
+                                    durable: true,
                                     exclusive: false,
                                     autoDelete: false,
                                     arguments: null);
+
             _repository = repository;
         }
 
         public void Enqueue()
         {
-            var consumer = new EventingBasicConsumer(_channel);
-
-            consumer.Received += async (model, ea) =>
+            try
             {
-                var body = ea.Body.ToArray();  // Obtém o corpo da mensagem como um array de bytes
-                var message = Encoding.UTF8.GetString(body);  // Converte para string (JSON)
+                //var consumer = new EventingBasicConsumer(_channel);
+                var consumer = new AsyncEventingBasicConsumer(_channel);
 
-                // Desserializa o JSON de volta para o objeto LivroDto
-                var livro = JsonSerializer.Deserialize<LivroDto>(message);
+                consumer.Received += async (model, ea) =>
+                {
+                    var body = ea.Body.ToArray();  
+                    var message = Encoding.UTF8.GetString(body);  
 
-                if (livro != null)
-                    await _repository.GravarLivro(livro);
-            };
+                    var livro = JsonSerializer.Deserialize<LivroDto>(message);
 
-            _channel.BasicConsume(queue: "hello",
-                                  autoAck: true,
-                                  consumer: consumer);
+                    if (livro != null)
+                        await _repository.GravarLivro(livro);
+
+
+                    _channel.BasicAck(ea.DeliveryTag, false);
+                };
+
+                _channel.BasicConsume(queue: "keylivros",
+                                      autoAck: true,
+                                      consumer: consumer);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }

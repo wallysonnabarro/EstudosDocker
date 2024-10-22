@@ -7,7 +7,7 @@ namespace EstudosDocker.infra
     {
         public static void AddRegisterServices(this IServiceCollection services)
         {
-            services.AddTransient<ILivrosServices, LivrosServices>();
+            services.AddSingleton<ILivrosServices, LivrosServices>();
 
             services.AddSingleton<IMessageService, MessageService>();
         }

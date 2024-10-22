@@ -4,13 +4,23 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-var connection = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ContextDb>(
+                       options =>
+                       {
+                           var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+                           var password = Environment.GetEnvironmentVariable("MSSQL_SA_PASSWORD");
 
-builder.Services.AddDbContext<ContextDb>(options =>
-{
-    options.UseSqlServer(connection);
-});
+                           if (string.IsNullOrEmpty(password))
+                           {
+                               throw new InvalidOperationException("Environment variable MSSQL_SA_PASSWORD is not set.");
+                           }
+
+                           connectionString = string.Format(connectionString!, password);
+
+                           options.UseSqlServer(connectionString);
+
+                       });
 
 builder.Services.AddRegisterServices();
 
@@ -20,8 +30,8 @@ var host = builder.Build();
 
 using (var scope = host.Services.CreateScope())
 {
-    var dbConetx = scope.ServiceProvider.GetRequiredService<ContextDb>();
-    dbConetx.Database.EnsureCreated();
+    var db = scope.ServiceProvider.GetRequiredService<ContextDb>();
+    db.Database.Migrate();
 }
 
 host.Run();
