@@ -9,11 +9,11 @@ builder.Services.AddDbContext<ContextDb>(
                        {
                            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-                           var password = Environment.GetEnvironmentVariable("MSSQL_SA_PASSWORD");
+                           string password = builder.Configuration["PasswordDb:password"]!;
 
                            if (string.IsNullOrEmpty(password))
                            {
-                               throw new InvalidOperationException("Environment variable MSSQL_SA_PASSWORD is not set.");
+                               throw new InvalidOperationException("Environment variable SA_PASSWORD is not set.");
                            }
 
                            connectionString = string.Format(connectionString!, password);
