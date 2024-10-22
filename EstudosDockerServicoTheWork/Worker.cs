@@ -1,17 +1,12 @@
-using EstudosDockerServicoTheWork.Infra;
-using EstudosDockerServicoTheWork.Services;
-
 namespace EstudosDockerServicoTheWork
 {
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly IMessageService _message;
 
-        public Worker(ILogger<Worker> logger, IMessageService message)
+        public Worker(ILogger<Worker> logger)
         {
             _logger = logger;
-            _message = message;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -24,8 +19,6 @@ namespace EstudosDockerServicoTheWork
                 }
                                 
                 await Task.Delay(1000, stoppingToken);
-
-                _message.Enqueue();
             }
         }
     }

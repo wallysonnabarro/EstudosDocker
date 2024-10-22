@@ -1,44 +1,36 @@
 services:
-  rabbitmq:
+  newsletter-rabbitmq:
+    container_name: Newsletter.RabbitMq
     image: rabbitmq:3-management-alpine
-    container_name: 'rabbitmq'
-    hostname: "rabbitmq"
-    labels:
-      NAME: "rabbitmq"
-    healthcheck:
-      test: rabbitmq-diagnostics -q ping
-      interval: 5s
-      timeout: 15s
-      retries: 3
+    hostname: newsletter-rabbitmq
     ports:
-        - 5672:5672
-        - 15672:15672
+      - 5672:5672
+      - 15672:15672
     environment:
-      RABBITMQ_DEFAULT_USER: "admin"
-      RABBITMQ_DEFAULT_PASS: "Livros123Estudos"
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: Livros123Estudos
     volumes:
-        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      - ~/.containers/queue/data/:/var/lib/rabbitmq/
+      - ~/.containers/queue/log/:/var/log/rabbitmq
     networks:
       - estudos-networks
       
-  sqldata:
+  newsletter-sqldata:
     image: mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
-    container_name: 'sqldata'
-    hostname: 'sqldata'
+    container_name: newsletter.sqldata
     environment:
-      - MSSQL_SA_PASSWORD=Livros123@Estudos
-      - ACCEPT_EULA=Y
-      - MSSQL_PID=Evaluation
+      MSSQL_SA_PASSWORD: "Livros123@Estudos"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Evaluation"
     ports:
       - "1433:1433"
     volumes:
-      - "livros-bd-mssql-server:/var/opt/mssql"
+      - "./.containers/database:/var/opt/mssql/data"
     networks:
       - estudos-networks
       
   api:
-    container_name: estudos-api
+    container_name: estudos.api
     build:
       dockerfile: EstudosDocker/Dockerfile
       context: .
@@ -46,13 +38,13 @@ services:
       - 8080:8080
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    depends_on: ["rabbitmq","sqldata"]
+    depends_on: ["newsletter-rabbitmq","newsletter-sqldata"]
     restart: on-failure
     networks:
       - estudos-networks    
 
   serviceworker:
-    container_name: estudos-service
+    container_name: estudos.service
     build:
       context: .
       dockerfile: EstudosDockerServicoTheWork/Dockerfile
@@ -60,13 +52,11 @@ services:
       - 8087:8087
     environment:
       - MSSQL_SA_PASSWORD=Livros123@Estudos
-    depends_on: ["rabbitmq","sqldata"]
+    depends_on: ["newsletter-rabbitmq","newsletter-sqldata"]
     restart: on-failure
     networks:
       - estudos-networks
-
-volumes:
-  livros-bd-mssql-server:        
+       
 
 networks:
   estudos-networks:

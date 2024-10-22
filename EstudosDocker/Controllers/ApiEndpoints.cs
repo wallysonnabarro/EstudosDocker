@@ -9,9 +9,9 @@ namespace EstudosDocker.Controllers
         {
             //app.MapGet("livros", () => ListaLivros.Lista);
 
-            app.MapPost("registrar-livro", async (LivroDto livro, IMessageService message, CancellationToken ct = default) =>
+            app.MapPost("registrar-livro", async (LivroDto livro, IMessagePublisher message, CancellationToken ct = default) =>
             {
-                var result = await message.Enqueue(livro, ct);
+                var result = await message.ExecuteAsync(livro, ct);
 
                 return Results.Ok(result);
             });

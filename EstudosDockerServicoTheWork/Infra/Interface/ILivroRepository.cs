@@ -2,7 +2,7 @@
 
 namespace EstudosDockerServicoTheWork.Infra.Interface
 {
-    internal interface ILivroRepository
+    public interface ILivroRepository
     {
         Task<Result<bool>> GravarLivro(LivroDto dto);
     }

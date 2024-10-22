@@ -22,7 +22,7 @@ builder.Services.AddDbContext<ContextDb>(
 
                        });
 
-builder.Services.AddRegisterServices();
+builder.Services.AddRegisterServices(builder.Configuration);
 
 builder.Services.AddHostedService<Worker>();
 
