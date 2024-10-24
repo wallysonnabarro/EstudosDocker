@@ -10,8 +10,8 @@ services:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: Livros123Estudos
     volumes:
-      - ~/.containers/queue/data/:/var/lib/rabbitmq/
-      - ~/.containers/queue/log/:/var/log/rabbitmq
+      - "mq-rabbit-estudos:/var/lib/rabbitmq/"
+      - "mq-rabbit-estudos:/var/log/rabbitmq"
     networks:
       - estudos-networks
       
@@ -24,7 +24,7 @@ services:
     ports:
       - "1200:1433"
     volumes:
-      - "./.containers/database:/var/opt/mssql/data"
+      - "db-mssql-estudo:/var/opt/mssql"
     networks:
       - estudos-networks
       
@@ -55,6 +55,10 @@ services:
     restart: on-failure
     networks:
       - estudos-networks       
+
+volumes:
+  db-mssql-estudo:  
+  mq-rabbit-estudos:
 
 networks:
   estudos-networks:
