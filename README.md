@@ -26,4 +26,4 @@ Isso deve ser colocado dentro do bloco `PropertyGroup`.
 
 Dentro do meu projeto, no arquivo Program.cs, eu remove todas as configurações de uso de container, para em seguida adicionar a classe de endpoints. Esta classe, foi utilizada para manter os endpoints de acesso a minha apliação, nela foi configurada um endpoint post conforme imagem: 
 
-![endpoints.png]()
+![endpoints.png](EstudosDocker/wwwroot/img)
