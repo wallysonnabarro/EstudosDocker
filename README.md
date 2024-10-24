@@ -14,7 +14,7 @@ Para iniciarmos, foram gerados dois projetos para este estudo:
 
 ### Vamos detalhar o que foi feito no projeto API.  
 
-Para trabalhar utilizando Docker, ao gerar o projeto, podemos marcar o campo "Habilitar uso de containers". Caso você já tenha um projeto que não tenha sido habilitado o uso do Docker por padrão, isso poderá ser feito clicando no seu projeto com o botão direito, selecionando "Adicionar" e clicando em "Suporte de Orquestrado de Containers". Com essa ação, será gerado um arquivo **Dockerfile** no seu projeto.
+Para usar o Docker ao criar o projeto, podemos deixar selecionado o checkbox "Habilitar o suporte a contêiner", e assim o suporte será configurado automaticamente. Caso você já tenha um projeto que não tenha sido habilitado o uso do Docker por padrão, isso poderá ser feito clicando no seu projeto com o botão direito, selecionando "Adicionar" e clicando em "Suporte de Orquestrado de Containers". Com essa ação, será gerado um arquivo **Dockerfile** no seu projeto.
 
 No meu caso, foi gerado o arquivo, mas eu tive que atualizar o meu arquivo `.csproj` adicionando a seguinte linha:
 
@@ -24,4 +24,6 @@ No meu caso, foi gerado o arquivo, mas eu tive que atualizar o meu arquivo `.csp
 
 Isso deve ser colocado dentro do bloco `PropertyGroup`.
 
-Para usar o Docker ao criar o projeto, podemos deixar selecionado o checkbox "Habilitar o suporte a contêiner", e assim o suporte será configurado automaticamente.
+Dentro do meu projeto, no arquivo Program.cs, eu remove todas as configurações de uso de container, para em seguida adicionar a classe de endpoints. Esta classe, foi utilizada para manter os endpoints de acesso a minha apliação, nela foi configurada um endpoint post conforme imagem: 
+
+![endpoints.png]()
