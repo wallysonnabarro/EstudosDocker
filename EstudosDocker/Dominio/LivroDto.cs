@@ -1,4 +1,4 @@
-﻿namespace EstudosDocker.domain
+﻿namespace Dominio
 {
     public class LivroDto
     {

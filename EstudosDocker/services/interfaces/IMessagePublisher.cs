@@ -1,4 +1,4 @@
-﻿using EstudosDocker.domain;
+﻿using Dominio;
 
 namespace EstudosDocker.services.interfaces
 {

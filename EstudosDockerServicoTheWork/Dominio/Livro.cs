@@ -1,4 +1,4 @@
-﻿namespace EstudosDockerServicoTheWork.Dominio
+﻿namespace Dominio
 {
     internal class Livro
     {

@@ -1,4 +1,4 @@
-﻿using EstudosDockerServicoTheWork.Dominio;
+﻿using Dominio;
 using EstudosDockerServicoTheWork.Infra.Interface;
 
 namespace EstudosDockerServicoTheWork.Infra.Repositorys

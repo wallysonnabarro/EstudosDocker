@@ -51,11 +51,10 @@ services:
       - 8087:8087
     environment:
       - MSSQL_SA_PASSWORD=Livros123@Estudos
-    depends_on: ["newsletter-rabbitmq","newsletter-sqldata"]
+    depends_on: ["newsletter-rabbitmq","newsletter-sqldata","api"]
     restart: on-failure
     networks:
-      - estudos-networks
-       
+      - estudos-networks       
 
 networks:
   estudos-networks:

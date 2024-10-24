@@ -1,4 +1,4 @@
-﻿using EstudosDocker.domain;
+﻿using Dominio;
 using EstudosDocker.services.interfaces;
 using MassTransit;
 

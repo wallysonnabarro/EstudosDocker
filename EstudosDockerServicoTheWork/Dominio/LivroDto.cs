@@ -1,4 +1,4 @@
-﻿namespace EstudosDockerServicoTheWork.Dominio
+﻿namespace Dominio
 {
     public class LivroDto
     {

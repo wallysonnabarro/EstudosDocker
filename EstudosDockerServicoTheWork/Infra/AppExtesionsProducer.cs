@@ -13,7 +13,6 @@ namespace EstudosDockerServicoTheWork.Infra
 
             services.AddMassTransit(bus =>
             {
-                bus.AddDelayedMessageScheduler();
                 bus.SetKebabCaseEndpointNameFormatter();
 
                 bus.AddConsumer<MessageConsumer>();
@@ -26,17 +25,10 @@ namespace EstudosDockerServicoTheWork.Infra
                         h.Password(builder["MessageBroker:Password"]!);
                     });
 
-                    cfg.UseDelayedMessageScheduler();
-
-                    cfg.ServiceInstance(instance =>
-                    {
-                        instance.ConfigureJobServiceEndpoints();
-                        instance.ConfigureEndpoints(context, new KebabCaseEndpointNameFormatter("dev", false));
-                    });
+                    cfg.ConfigureEndpoints(context, new KebabCaseEndpointNameFormatter("dev", false));
                 });
             });
 
-            services.AddMassTransitHostedService(true);
         }
     }
 }

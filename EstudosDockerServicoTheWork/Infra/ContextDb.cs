@@ -1,4 +1,4 @@
-﻿using EstudosDockerServicoTheWork.Dominio;
+﻿using Dominio;
 using Microsoft.EntityFrameworkCore;
 
 namespace EstudosDockerServicoTheWork.Infra
