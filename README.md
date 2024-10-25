@@ -3,10 +3,6 @@ Em desenvolvimento
 
 # Projeto Docker
 
-## Introdução
-
-Este projeto foi desenvolvido visando o aprendizado da arquitetura Docker. Sempre tive pré-conceito sobre esta arquitetura, mas ao estudar o desenvolvimento e implantação, identifiquei que tudo depende da necessidade. Em alguns casos, teremos a necessidade de quebrar o projeto em outros pequenos projetos, facilitando o desenvolvimento e entrega do produto.
-
 ## Concepção
 
 Para iniciarmos, foram gerados dois projetos para este estudo:
