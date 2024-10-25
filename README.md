@@ -3,9 +3,7 @@ Em desenvolvimento
 
 # Projeto Docker
 
-## Concepção
-
-Este estudo foi dividido em dois projetos, sendo eles descritos abaixo:
+## Especificação
 
 1. Projeto API
 2. Projeto Worker Services
