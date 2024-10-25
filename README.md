@@ -5,7 +5,8 @@ Em desenvolvimento
 
 ## Concepção
 
-Para iniciarmos, foram gerados dois projetos para este estudo:
+Este estudo foi dividido em dois projetos, sendo eles descritos abaixo:
+
 1. Projeto API
 2. Projeto Worker Services
 
